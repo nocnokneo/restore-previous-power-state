@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Halt on errors
+set -e
+
 PREVIOUS_STATE_FILE=/var/lib/pm-utils/previous_state
 
 if [ ${UID} -ne 0 ]; then
