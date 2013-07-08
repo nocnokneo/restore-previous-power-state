@@ -14,6 +14,7 @@ install -m 755 -d \
 
 install -pm 755 restore-previous-power-state ${DESTDIR}/usr/bin/
 install -pm 755 log-previous-power-state ${DESTDIR}/etc/init.d/
+rm -f ${DESTDIR}/etc/pm/sleep.d/00log-previous-power-state
 ln -s ../../init.d/log-previous-power-state ${DESTDIR}/etc/pm/sleep.d/00log-previous-power-state
 
 # Initialize the previous state for first use
