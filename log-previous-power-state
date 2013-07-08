@@ -1,0 +1,20 @@
+#!/bin/sh
+# This file can be run as a pm-utils "hook" as well as an init script
+### BEGIN INIT INFO
+# Provides:       log-previous-power-state
+# Required-Start: $local_fs
+# Required-Stop:  $local_fs
+# Default-Start:  2
+# Default-Stop:   0 1 6
+# Description:    Log the previous power state (off/hibernate/suspend)
+### END INIT INFO
+
+PREVIOUS_STATE_FILE=/var/lib/pm-utils/previous_state
+
+mkdir -p $(dirname ${PREVIOUS_STATE_FILE})
+
+case "$1" in
+    resume) echo suspend   > ${PREVIOUS_STATE_FILE} ;;
+    thaw)   echo hibernate > ${PREVIOUS_STATE_FILE} ;;
+    start)  echo off       > ${PREVIOUS_STATE_FILE} ;;
+esac

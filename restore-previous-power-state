@@ -1,0 +1,30 @@
+#!/bin/sh
+
+PREVIOUS_STATE_FILE=/var/lib/pm-utils/previous_state
+
+if [ ${UID} -ne 0 ]; then
+    echo "This script must be run with root privileges." 2>1
+    exit 1
+fi
+
+if [ ! -r ${PREVIOUS_STATE_FILE} ]; then
+    echo "Cannot read ${PREVIOUS_STATE_FILE}." 1>&2
+    exit 1
+fi
+
+previous_state=`cat ${PREVIOUS_STATE_FILE}`
+
+case "${previous_state}" in
+    suspend) 
+	echo pm-suspend | at now + 2 minutes
+	;;
+    hibernate)
+	echo pm-hibernate | at now + 2 minutes
+	;;
+    off)
+	shutdown -h +2m
+	;;
+    *)
+	echo "Unknown previous power state: ${previous_state}" 1>&2
+	;;
+esac
